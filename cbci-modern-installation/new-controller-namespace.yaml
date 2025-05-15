@@ -10,4 +10,4 @@ kind: Namespace
 metadata:
   name: my-team-builds
   labels:
-    cloudbees.com/role: controller
+    cloudbees.com/role: controller-builds-pankaj
