@@ -1,0 +1,45 @@
+# https://docs.cloudbees.com/docs/cloudbees-ci/latest/kubernetes-install-guide/kubernetes-pre-install-requirements
+# This file creates a namespace and a service account for the CloudBees Operations Center (OC) in a Kubernetes cluster.
+# The namespace is named "ci" and is labeled with the application name and environment.
+# The service account is named "oc-service-account" and is created within the "ci" namespace.
+# A role named "oc-role" is created, granting permissions to manage various Kubernetes resources such as pods, services, and configmaps.
+# Finally, a role binding named "oc-rolebinding" is created, binding the service account to the role, allowing it to perform the specified actions within the namespace.
+# This setup is essential for the proper functioning of the CloudBees Operations Center, enabling it to interact with the Kubernetes API and manage resources effectively.
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ci
+  labels:
+    app.kubernetes.io/name: cloudbees-operations-center
+    environment: test
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: oc-service-account
+  namespace: ci
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: ci
+  name: oc-role
+rules:
+  - apiGroups: ["", "rbac.authorization.k8s.io"]
+    resources: ["pods", "services", "endpoints", "configmaps", "secrets", "rolebindings", "roles"]
+    verbs: ["create", "get", "list", "watch", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: oc-rolebinding
+  namespace: ci
+subjects:
+  - kind: ServiceAccount
+    name: oc-service-account
+    namespace: ci
+roleRef:
+  kind: Role
+  name: oc-role
+  apiGroup: rbac.authorization.k8s.io
