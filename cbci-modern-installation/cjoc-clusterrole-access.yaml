@@ -1,3 +1,5 @@
+# To fix the below rolebinding error.
+#io.fabric8.kubernetes.client.KubernetesClientException: Failure executing: POST at: https://10.96.0.1:443/apis/rbac.authorization.k8s.io/v1/namespaces/my-team-builds/rolebindings. Message: rolebindings.rbac.authorization.k8s.io is forbidden: User "system:serviceaccount:cbci-test-pyadav-28912:cjoc" cannot create resource "rolebindings" in API group "rbac.authorization.k8s.io" in the namespace "my-team-builds". Received status: Status(apiVersion=v1, code=403, details=StatusDetails(causes=[], group=rbac.authorization.k8s.io, kind=rolebindings, name=null, retryAfterSeconds=null, uid=null, additionalProperties={}), kind=Status, message=rolebindings.rbac.authorization.k8s.io is forbidden: User "system:serviceaccount:cbci-test-pyadav-28912:cjoc" cannot create resource "rolebindings" in API group "rbac.authorization.k8s.io" in the namespace "my-team-builds", metadata=ListMeta(_continue=null, remainingItemCount=null, resourceVersion=null, selfLink=null, additionalProperties={}), reason=Forbidden, status=Failure, additionalProperties={})
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
